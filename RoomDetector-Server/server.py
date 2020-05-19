@@ -77,7 +77,6 @@ def FindRoom(descriptorCamera):
     roomName = ""
     for img in images:
         localMatch = GetMatches(img[0], descriptorCamera)
-        # print(len(localMatch),img[1])
         if(len(localMatch) > len(match)):
             match = localMatch
             roomName = img[1]
@@ -117,9 +116,7 @@ def Detection():
 
         array = np.fromstring(data, np.uint8)
         img = cv.imdecode(array, cv.COLOR_BGR2GRAY)
-        # img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-        
-        # img = cv.imread(r'D:\Iulian\UnityProjects\Licenta\ServerAPI-Python\Server\Resources\bucatarie\1.jpg', cv.IMREAD_GRAYSCALE)
+
         value = FindRoom(GetDescriptors(img))
         return value
 
