@@ -1,0 +1,1 @@
+bug pe server, sa identific daca exista sau nu folderul resources
