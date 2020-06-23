@@ -64,3 +64,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Zips
+/Licenta.zip
+
+# Resources
+/RoomDetector-Server/Resources/

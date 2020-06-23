@@ -14,6 +14,7 @@ from flask import request, Flask
 imageFormat = '.jpg'
 resourcesDirectoryPath = 'Resources'
 images = []
+threshould = 0.5
 
 #Utils
 
@@ -22,9 +23,9 @@ orb = cv.ORB_create()
 # create BFMatcher object
 bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True)
 
-# (descriptor, roomName)
+# (descriptors, roomName)
 def LoadImages():
-    subfolders = [ f.name for f in os.scandir(resourcesDirectoryPath) if f.is_dir() ]
+    subfolders = [folder.name for folder in os.scandir(resourcesDirectoryPath) if folder.is_dir()]
     images = []
     for folder in subfolders:
         localPath = os.path.join(resourcesDirectoryPath, folder)
@@ -32,14 +33,13 @@ def LoadImages():
         for img in imgs:
             localPathImg = os.path.join(localPath, img)
             imgArray = cv.imread(localPathImg, cv.IMREAD_GRAYSCALE)
-            # imgArray = cv.resize(imgArray, (0, 0), fx=0.5, fy=0.5)
-            images.append((GetDescriptors(imgArray),folder))
+            images.append((GetDescriptors(imgArray), folder))
     return images
 
 def WriteImage(roomName, image):
     if path.exists(resourcesDirectoryPath) == False:
         os.mkdir(resourcesDirectoryPath)
-    pathToRoomName = path.join(resourcesDirectoryPath,roomName)
+    pathToRoomName = path.join(resourcesDirectoryPath, roomName)
     if path.exists(pathToRoomName) == False:
         os.mkdir(pathToRoomName)
     imageNamePath = int(len(os.listdir(pathToRoomName))) + 1
@@ -57,20 +57,21 @@ def GetDescriptors(img):
     return descriptorsCamera
 
 def FilterMatches(matches, matchesThreshold):
-    dist = [m.distance for m in matches]
-    if(len(dist) != 0):
-        thres_dist = (sum(dist) / len(dist)) * matchesThreshold
-    matches = [m for m in matches if m.distance < thres_dist]
+    distances = [match.distance for match in matches]
+    if(len(distances) != 0):
+        sumDistances = sum(distances)
+        lenDistances = len(distances)
+        threshold_distance = (sumDistances / lenDistances) * matchesThreshold
+    matches = [match for match in matches if match.distance < threshold_distance]
     return matches
 
 def GetMatches(des1, des):
     try:
-        # Match descriptors.
         matches = bf.match(des1 ,des)
     except:
         matches = []
-        print("An exception occurred")
-    return FilterMatches(matches, 0.5)
+        print("Something was wrong.")
+    return FilterMatches(matches, threshould)
 
 def FindRoom(descriptorCamera):
     match = [0,0,0,0,0]
@@ -90,7 +91,7 @@ app = Flask(__name__)
 @app.route('/admin', methods = ['GET'])
 def GetRooms():
     if request.method == 'GET':
-        subfolders = [ f.name for f in os.scandir(resourcesDirectoryPath) if f.is_dir() ]
+        subfolders = [folder.name for folder in os.scandir(resourcesDirectoryPath) if folder.is_dir()]
         localJson = json.dumps(subfolders)
         return localJson
 
