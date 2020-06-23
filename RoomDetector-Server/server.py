@@ -16,7 +16,7 @@ resourcesDirectoryPath = 'Resources'
 images = []
 threshould = 0.5
 
-#Utils
+#Methods
 
 # Initiate ORB detector
 orb = cv.ORB_create()
@@ -83,9 +83,7 @@ def FindRoom(descriptorCamera):
             roomName = img[1]
     return roomName
 
-#Utils
-
-# Initialize the Flask application
+# Flask
 app = Flask(__name__)
 
 @app.route('/admin', methods = ['GET'])
