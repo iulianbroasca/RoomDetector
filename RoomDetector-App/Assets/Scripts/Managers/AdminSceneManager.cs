@@ -13,12 +13,12 @@ namespace Managers
 
         #region Singleton
 
-        public static AdminSceneManager Instance;
+        public static AdminSceneManager instance;
 
         public void Singleton()
         {
-            if (Instance == null)
-                Instance = this;
+            if (instance == null)
+                instance = this;
             else
                 Destroy(this);
         }
@@ -63,7 +63,7 @@ namespace Managers
             UIManagerAdminScene.Instance.EnableLoader();
             UIManagerAdminScene.Instance.SetActiveSendImageButton(false);
 
-            var image = new ImageData(currentRoom, CameraManager.Instance.GetJpgTexture());
+            var image = new ImageData(currentRoom, CameraManager.instance.GetJpgTexture());
             StartCoroutine
             (
                     ApiManager.Instance.Put
@@ -72,8 +72,7 @@ namespace Managers
                             JsonConvert.SerializeObject(image),
                             (callback) =>
                             {
-                                UIManagerAdminScene.Instance.SetActivePopup(callback == Constants.MessageSuccessServer);
-                                Debug.Log(callback);
+                                UIManagerAdminScene.Instance.EnablePopup(callback == Constants.MessageSuccessServer);
                             }
                     )
             );

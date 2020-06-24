@@ -23,7 +23,7 @@ namespace Managers
 
             while (true)
             {
-                var www = UnityWebRequest.Put(Constants.UriDetection, CameraManager.Instance.GetJpgTexture());
+                var www = UnityWebRequest.Put(Constants.UriDetection, CameraManager.instance.GetJpgTexture());
                 yield return www.SendWebRequest();
 
                 if (www.isNetworkError || www.isHttpError)
@@ -35,7 +35,6 @@ namespace Managers
                     UIManagerUserScene.Instance.SetTopText(www.downloadHandler.text);
                 }
             }
-            // ReSharper disable once IteratorNeverReturns
         }
 
         private void SetIsContentReady(string value)

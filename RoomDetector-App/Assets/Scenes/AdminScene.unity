@@ -1748,8 +1748,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1314704012}
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1333621196}
+        m_MethodName: SetActivePopup
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3602,7 +3602,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arCameraManager: {fileID: 1224414098}
-  imageInfo: {fileID: 1016645844}
 --- !u!1 &1727270873
 GameObject:
   m_ObjectHideFlags: 0

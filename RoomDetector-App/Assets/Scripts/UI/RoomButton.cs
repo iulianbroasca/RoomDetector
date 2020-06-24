@@ -28,7 +28,7 @@ namespace UI
 
         public void SetCurrentRoomInApp()
         {
-            AdminSceneManager.Instance.SetCurrentRoom(GetRoomName());
+            AdminSceneManager.instance.SetCurrentRoom(GetRoomName());
             UIManagerAdminScene.Instance.SetTextOnTopBar(Constants.CurrentRoomText + GetRoomName());
         }
     }

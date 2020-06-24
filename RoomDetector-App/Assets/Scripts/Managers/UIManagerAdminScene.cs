@@ -19,7 +19,6 @@ namespace Managers
         [SerializeField] private GameObject cameraButton;
         [SerializeField] private GameObject closeButton;
 
-
         [Header("Popup")]
         [SerializeField] private GameObject popup;
         [SerializeField] private GameObject successLine;
@@ -63,9 +62,12 @@ namespace Managers
             Singleton();
         }
 
+        /// <summary>
+        /// This method is assigned on Send image button
+        /// </summary>
         public void SendImage()
         {
-            AdminSceneManager.Instance.SendImage();
+            AdminSceneManager.instance.SendImage();
         }
 
         public void InstantiateRoomList(List<string> rooms)
@@ -108,7 +110,7 @@ namespace Managers
             closeButton.SetActive(!roomMenu.activeSelf);
         }
 
-        public void SetActivePopup(bool value)
+        public void EnablePopup(bool value)
         {
             popup.SetActive(true);
             okButton.SetActive(true);
@@ -127,9 +129,22 @@ namespace Managers
             errorLine.SetActive(false);
         }
 
+        /// <summary>
+        /// This method is used on Button from popup (Popup->Elements->ButtonLine->Button)
+        /// </summary>
+        /// <param name="value"></param>
         public void SetActiveSendImageButton(bool value)
         {
             sendImageButton.SetActive(value);
+        }
+
+        /// <summary>
+        /// This method is used on Button from popup (Popup->Elements->ButtonLine->Button)
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetActivePopup(bool value)
+        {
+            popup.SetActive(value);
         }
     }
 }

@@ -97,26 +97,6 @@ namespace Managers
             }
         }
 
-        public IEnumerator PutPost(string uri, byte[] data, System.Action<string> callback)
-        {
-            var www = UnityWebRequest.Put(uri, data);
-            www.method = UnityWebRequest.kHttpVerbPOST;
-            www.SetRequestHeader("Content-Type", "application/json");
-            www.SetRequestHeader("Accept", "application/json");
-            www.useHttpContinue = false;
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                callback(www.error);
-            }
-            else
-            {
-                callback(www.downloadHandler.text);
-            }
-        }
-
         public IEnumerator Put(string uri, byte[] data, System.Action<string> callback)
         {
             var www = UnityWebRequest.Put(uri, data);

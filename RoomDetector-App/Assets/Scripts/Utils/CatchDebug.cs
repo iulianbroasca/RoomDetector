@@ -11,6 +11,11 @@ namespace Utils
             Application.logMessageReceived += Log;
         }
 
+        private void OnDisable()
+        {
+            Application.logMessageReceived -= Log;
+        }
+
         public void Log(string message, string stackTrace, LogType type)
         {
             var text = "";
